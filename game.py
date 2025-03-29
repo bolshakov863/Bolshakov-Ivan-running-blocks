@@ -1,7 +1,7 @@
 from tkinter import *
 from pickle import dump, load
 
-from menu import canvas
+from menu import canvas, window
 
 
 def pause_toggle():
@@ -74,9 +74,19 @@ KEY_PAUSE = 19
 
 game_width = 800
 game_height = 800
-game_over
+game_over = False
+pause = False
 
+player_size = 100
+SPEED = 12
+x1, y1 = 50, 50
+x2, y2 = x1, y1 + player_size + 100
+player1_color = 'red'
+player2_color = 'blue'
+x_finish = game_width - 50
 
-
+window = Tk()
+window.title('Догони меня, если сможешь')
+canvas = Canvas(window)
 
 
