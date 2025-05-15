@@ -1,8 +1,6 @@
 from tkinter import *
 from pickle import dump, load
 
-from menu import canvas, window
-
 
 def pause_toggle():
     global pause
@@ -22,7 +20,7 @@ def save_game(event):
 
 def load_game(event):
     global x1, x2
-    with open ('save.dat', 'wb') as f:
+    with open ('save.dat', 'rb') as f:
         data = load(f)
         x1, x2 = data
         canvas.coords(player1_id, x1, y1, x1 + player_size, y1 + player_size)
@@ -87,6 +85,21 @@ x_finish = game_width - 50
 
 window = Tk()
 window.title('Догони меня, если сможешь')
-canvas = Canvas(window)
+canvas = Canvas(window, width=game_width, height=game_height,
+                bg='white')
+
+player1_id = canvas.create_rectangle(x1, y1, x1 + player_size, y1 + player_size, fill = player1_color)
+
+player2_id = canvas.create_rectangle(x2, y2, x2 + player_size, y2 + player_size, fill = player2_color)
+
+finish_id = canvas.create_rectangle(x_finish, 0, x_finish + 10, game_height, fill = 'black')
+
+text_status_id = canvas.create_text(x1, game_height - 50, anchor=SW, font=('Ariel', '25'), text = 'Вперёд!')
+
+canvas.pack()
+window.bind('<KeyRelease>', key_handler)
+window.bind('<Control-Key-s>', save_game)
+window.bind('<Control-Key-o>', load_game)
+window.mainloop()
 
 

@@ -2,49 +2,45 @@ from tkinter import *
 
 def menu_up():
     global menu_current_index
-    menu_current_index -= 1
-    if menu_current_index < 0:
-        menu_current_index = 0
+    menu_current_index = max(0, menu_current_index - 1)
     menu_update()
 
 def menu_down():
     global menu_current_index
-    menu_current_index += 1
-    if menu_current_index > len(menu_options) - 1:
-        menu_current_index = len(menu_options) - 1
+    menu_current_index = min(len(menu_options)-1, menu_current_index + 1)
     menu_update()
 
 def menu_create(canvas):
-    offest = 0
+    offset = 0
     for menu_option in menu_options:
-        option_id = canvas.create_text(400, 200 + offest,
-anchor = CENTER, font = ('Arial','25'), text=menu_option,
-fill='black')
+        option_id = canvas.create_text(400, 200+offset, anchor=CENTER, font=('Arial', '25'), text=menu_option, fill='black')
         menu_options_id.append(option_id)
-        offest += 50
+        offset += 50
     menu_update()
 
-def menu_hide():
-    global menu_mode
-    menu_mode = False
-    menu_update()
 
 def menu_show():
     global menu_mode
     menu_mode = True
     menu_update()
 
+
+def menu_hide():
+    global menu_mode
+    menu_mode = False
+    menu_update()
+
 def menu_update():
-    for menu_index in range (len(menu_options_id)):
+    for menu_index in range(len(menu_options_id)):
         element_id = menu_options_id[menu_index]
         if menu_mode:
-            canvas.itemconfig(element_id, state = 'normal')
+            canvas.itemconfig(element_id, state='normal')
             if menu_index == menu_current_index:
                 canvas.itemconfig(element_id, fill='blue')
             else:
                 canvas.itemconfig(element_id, fill='black')
         else:
-            canvas.itemconfig(element_id, state = 'hidden')
+            canvas.itemconfig(element_id, state='hidden')
 
 def menu_enter():
     if menu_current_index == 0:
@@ -73,13 +69,13 @@ def game_load():
 
 def game_exit():
     print('Выйти из игры')
-    exit()
+    window.destroy()
 
 def game_controller(event):
     if event.keycode == KEY_ESC:
         menu_show()
     else:
-        print ('Управляем персонажами игрока')
+        print('Управляем персонажами игрока')
 
 def menu_controller(event):
     if event.keycode == KEY_UP:
@@ -100,12 +96,12 @@ def key_press(event):
 menu_mode = True
 menu_options = ['Возврат в игру', 'Новая игра', 'Сохранить', 'Загрузить', 'Выход']
 menu_options_id = []
-menu_current_index = 3
+menu_current_index = 0
 
-KEY_UP = 87
-KEY_DOWN = 83
-KEY_ESC = 27
-KEY_ENTER = 13
+KEY_UP = 87     # W
+KEY_DOWN = 83   # S
+KEY_ESC = 27    # Esc
+KEY_ENTER = 13  # Enter
 
 window_width = 800
 window_height = 800
