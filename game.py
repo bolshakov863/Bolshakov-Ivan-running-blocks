@@ -1,6 +1,6 @@
 from tkinter import *
 from pickle import dump, load
-
+import menu
 
 def pause_toggle():
     global pause
